@@ -10,47 +10,43 @@
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
   <script>
-    // Optional: set your repository URL if the automatic detection doesn't work
-    // (for example with a custom domain).
+    // Optional: set your repository URL if automatic detection doesn't work (e.g. custom domain).
     window.TRACKER_CONFIG = { repo: "" };
   </script>
 </head>
 <body>
+<a class="skip" href="#content">Skip to conferences</a>
 <div class="wrap">
-  <header>
-    <div>
-      <h1>Chip conference<br>deadlines</h1>
-      <p class="sub">Paper deadlines for analog, mixed-signal, VLSI and circuits &amp; systems conferences. A bot checks the official pages every day, adds each new year's edition as soon as the last one ends, and logs every change.</p>
-    </div>
+  <header class="top">
+    <h1>Chip conference deadlines</h1>
+    <p class="sub">Paper deadlines for analog, mixed-signal, VLSI and circuits &amp; systems conferences. A bot checks the official pages every day and adds each new year's edition as soon as the last one ends.</p>
     <div class="monitor">
-      <div id="health"><span class="dot"></span>Loading…</div>
+      <p id="health"><span class="dot"></span>Loading…</p>
       <div class="subscribe">
-        <a id="subCal" href="deadlines.ics">Subscribe in calendar</a>
-        <a id="subGcal" href="#" target="_blank" rel="noopener">Add to Google Calendar</a>
-        <a href="feed.xml">RSS</a>
+        <a id="subCal" class="btn" href="deadlines.ics">Subscribe in calendar</a>
+        <a id="subGcal" class="btn" href="#" target="_blank" rel="noopener">Google Calendar</a>
+        <a class="btn" href="feed.xml">RSS</a>
       </div>
     </div>
   </header>
 
-  <section class="hero" id="hero" aria-live="off"></section>
-
-  <div class="split">
-    <section class="panel diagram">
-      <h2>Deadlines over the next ten months</h2>
-      <p>Each edge marks a paper deadline. The dashed line is today.</p>
-      <div id="timeline"></div>
-    </section>
-    <section class="panel changes">
+  <div class="top-grid">
+    <section class="hero" id="hero" aria-live="off"></section>
+    <section class="card changes">
       <h2>Recent changes</h2>
       <ol id="changes"></ol>
     </section>
   </div>
 
-  <div class="controls">
+  <div class="controls" id="content">
+    <div class="seg" role="group" aria-label="Layout">
+      <button data-layout="list" aria-pressed="true">List</button>
+      <button data-layout="timeline" aria-pressed="false">Timeline</button>
+    </div>
     <div class="seg" role="group" aria-label="Show">
       <button data-view="upcoming" aria-pressed="true">Upcoming</button>
       <button data-view="open" aria-pressed="false">Open deadlines</button>
-      <button data-view="all" aria-pressed="false">All, including past</button>
+      <button data-view="all" aria-pressed="false">All</button>
     </div>
     <select id="catSel" aria-label="Category">
       <option value="">All categories</option>
@@ -64,14 +60,16 @@
       <option value="deadline">Sort by deadline</option>
       <option value="conf">Sort by conference date</option>
     </select>
-    <input type="search" id="q" placeholder="Search name, topic or city">
+    <input type="search" id="q" placeholder="Search name, topic or city" aria-label="Search">
   </div>
+  <p class="count-line" id="countLine" aria-live="polite"></p>
 
-  <section class="list" id="list" aria-label="Conferences"><div class="empty">Loading conferences…</div></section>
+  <section id="listView" class="list" aria-label="Conference list"><div class="empty">Loading conferences…</div></section>
+  <section id="timelineView" class="card tl-card" aria-label="Conference timeline" hidden></section>
 
   <footer>
     <p>Countdowns end at 23:59 on the deadline day in the conference's stated time zone when known, otherwise in your own time zone. Always confirm on the official page before submitting.</p>
-    <p><b>How dates are verified.</b> "Official page" means the date was read from the conference's own site and the quote was checked word for word. "Web search" means it came from search results and hasn't been confirmed on the official site yet. Changes the bot can't verify are held for a person to review instead of being published.</p>
+    <p><strong>How dates are verified.</strong> "Verified on official page" means the date was read from the conference's own site and the quote was checked word for word. "From web search" means it hasn't been confirmed on the official site yet. Changes the bot can't verify are held for a person to review instead of being published.</p>
     <p id="repoLinks"></p>
   </footer>
 </div>
