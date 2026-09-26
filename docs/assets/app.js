@@ -158,7 +158,7 @@
       list.map(e => {
         const st = status(e, now);
         const fix = repo ? `${repo}/issues/new?template=correction.yml&title=${encodeURIComponent("Correction: " + e.name)}` : "";
-        return `<article class="row ${st}">
+        return `<article class="row ${st}" id="row-${esc(e.id)}">
           <div class="c1"><div class="cname">${esc(e.name)}</div><div class="cfull">${esc(e.s.full)}</div>
             <span class="tier ${e.s.category === "t1" ? "t1" : ""}">${CAT[e.s.category] || ""}</span></div>
           <div><div class="lbl">Conference dates</div><div class="val">${fmtRange(e)}</div></div>
@@ -255,6 +255,110 @@
       ${hidden > 0 && rows.length ? `<p class="tl-foot">${hidden} more conference${hidden > 1 ? "s" : ""} fall outside this window. Switch to List to see them.</p>` : ""}`;
   }
 
+
+  // ---------- deadline diagram: clock waveform with rising edges at each deadline ----------
+  function renderDiagram() {
+    const W = 1200, padL = 16, padR = 16, MONTHS = 10;
+    const now = new Date(), nowMs = now.getTime();
+    const t0 = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+    const t1 = new Date(now.getFullYear(), now.getMonth() + MONTHS, 1).getTime();
+    const x = t => padL + (t - t0) / (t1 - t0) * (W - padL - padR);
+    const items = join().filter(e => e.deadline && deadlineMs(e) >= t0 && deadlineMs(e) < t1)
+      .sort((a, b) => deadlineMs(a) - deadlineMs(b));
+
+    // label boxes: name on line 1, date + distance on line 2; width from text length
+    const CH_NAME = 9.2, CH_SUB = 7.6, BOX_H = 44, GAP = 10;
+    const boxes = items.map(e => {
+      const st = status(e, nowMs), days = Math.ceil((deadlineMs(e) - nowMs) / DAY);
+      const name = e.s.name;
+      const when = st === "closed" ? `${fmtShort(e.deadline)}, closed` :
+        days <= 0 ? `${fmtShort(e.deadline)}, today` : `${fmtShort(e.deadline)}, in ${days} day${days === 1 ? "" : "s"}`;
+      const w = Math.max(name.length * CH_NAME, when.length * CH_SUB) + 20;
+      const xx = x(deadlineMs(e));
+      const flip = xx + w > W - padR;              // anchor label to the left of the edge near the right end
+      return { e, st, name, when, w, xx, bx: flip ? xx - w : xx, flip };
+    });
+    // Lane packing, lane 0 closest to the waveform. Rules:
+    //  - boxes in the same lane must not overlap
+    //  - a box must never cover another deadline's stem, so any deadline whose edge
+    //    falls under a box has to sit in a lower lane (a staircase)
+    const placed = [];
+    const covers = (b, xx) => xx >= b.bx - 4 && xx <= b.bx + b.w + 4;
+    for (let i = boxes.length - 1; i >= 0; i--) {             // right to left
+      const b = boxes[i];
+      let min = 0, max = Infinity;
+      placed.forEach(p => {
+        if (covers(b, p.xx)) min = Math.max(min, p.lane + 1);  // p's stem is under b: b goes above p
+        if (covers(p, b.xx)) max = Math.min(max, p.lane - 1);  // b's stem is under p: b goes below p
+      });
+      const free = L => !placed.some(p => p.lane === L && b.bx < p.bx + p.w + GAP && p.bx < b.bx + b.w + GAP);
+      let lane = min;
+      while (!free(lane) && lane <= max) lane++;
+      if (!free(lane)) { lane = min; while (!free(lane)) lane++; }   // constraint impossible: just avoid overlap
+      b.lane = lane;
+      placed.push(b);
+    }
+    const lanes = Math.max(1, ...boxes.map(b => b.lane + 1));
+    const top = 16, laneH = BOX_H + 12;
+    const hi = top + lanes * laneH + 18, lo = hi + 34, H = lo + 58;
+
+    // waveform: high on even months, low on odd months
+    let wave = `M${x(t0)},${lo}`, months = "", grid = "";
+    for (let i = 0; i < MONTHS; i++) {
+      const a = new Date(now.getFullYear(), now.getMonth() + i, 1), b = new Date(now.getFullYear(), now.getMonth() + i + 1, 1);
+      const xa = x(a.getTime()), xb = x(b.getTime()), y = i % 2 ? lo : hi;
+      wave += ` L${xa},${y} L${xb},${y}`;
+      const yr = a.getMonth() === 0 || i === 0 ? ` ${a.getFullYear()}` : "";
+      months += `<text x="${(xa + xb) / 2}" y="${lo + 30}" text-anchor="middle" font-size="16" font-weight="700" fill="#2B3645">${a.toLocaleDateString(undefined, { month: "short" })}${yr}</text>`;
+      if (i) grid += `<line x1="${xa}" y1="${top}" x2="${xa}" y2="${lo + 8}" stroke="#E3E8EE" stroke-width="1"/>`;
+    }
+    const nx = x(nowMs);
+    const colour = { open: "#08694E", soon: "#C77700", closed: "#8E98A6" };
+    const textCol = { open: "#0E1621", soon: "#0E1621", closed: "#56606E" };
+
+    const stems = boxes.map(b => {
+      const by = hi - 18 - (b.lane + 1) * laneH + 12, c = colour[b.st];
+      return `<line x1="${b.xx}" y1="${by + BOX_H}" x2="${b.xx}" y2="${lo}" stroke="${c}" stroke-width="${b.st === "closed" ? 2 : 3}"/>
+        <circle cx="${b.xx}" cy="${lo}" r="5" fill="${c}"/>`;
+    }).join("");
+    const marks = boxes.map(b => {
+      const by = hi - 18 - (b.lane + 1) * laneH + 12, c = colour[b.st];
+      const tx = b.bx + 10;
+      return `<g class="dg-item" tabindex="0" role="link" data-id="${esc(b.e.id)}" aria-label="${esc(b.e.name)} paper deadline ${esc(b.when)}">
+        <title>${esc(b.e.name)}: paper deadline ${fmt(b.e.deadline)}</title>
+        <rect class="pill" x="${b.bx}" y="${by}" width="${b.w}" height="${BOX_H}" rx="6" fill="#fff" stroke="${c}" stroke-width="2"/>
+        <rect x="${b.flip ? b.bx + b.w - 5 : b.bx}" y="${by}" width="5" height="${BOX_H}" rx="2" fill="${c}"/>
+        <text x="${tx}" y="${by + 19}" font-size="16" font-weight="800" fill="${textCol[b.st]}">${esc(b.name)}</text>
+        <text x="${tx}" y="${by + 36}" font-size="13.5" font-weight="600" fill="${b.st === "closed" ? "#56606E" : b.st === "soon" ? "#8A5300" : "#2B3645"}">${esc(b.when)}</text>
+      </g>`;
+    }).join("");
+
+    $("#diagram").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${items.length} paper deadlines over the next ${MONTHS} months, relative to today">
+      <rect x="${x(t0)}" y="${top - 6}" width="${Math.max(0, nx - x(t0))}" height="${lo - top + 14}" fill="#EEF1F5"/>
+      ${grid}
+      <path d="${wave}" fill="none" stroke="#1D38B0" stroke-width="3" stroke-linejoin="round" opacity=".55"/>
+      ${months}
+      <line x1="${nx}" y1="${top - 6}" x2="${nx}" y2="${lo + 8}" stroke="#C0251B" stroke-width="3"/>
+      <rect x="${nx - 30}" y="${lo + 38}" width="60" height="22" rx="4" fill="#C0251B"/>
+      <text x="${nx}" y="${lo + 54}" text-anchor="middle" font-size="13.5" font-weight="800" fill="#fff">Today</text>
+      ${stems}${marks}
+    </svg>`;
+    if (!items.length) $("#diagram").innerHTML = `<div class="empty">No deadlines in the next ${MONTHS} months yet.</div>`;
+  }
+
+  function jumpTo(id) {
+    if (layout !== "list") document.querySelector('[data-layout="list"]').click();
+    let el = document.getElementById("row-" + id);
+    if (!el) {                                   // hidden by filters: clear them and try again
+      $("#q").value = ""; $("#catSel").value = "";
+      document.querySelector('[data-view="all"]').click();
+      el = document.getElementById("row-" + id);
+    }
+    if (!el) return;
+    el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+    el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+  }
+
   // ---------- orchestration ----------
   function renderMain() {
     const list = filtered();
@@ -272,7 +376,7 @@
       el.textContent = t.d > 0 ? `${t.d} days ${t.h} h left` : `${pad(t.h)}:${pad(t.m)}:${pad(t.s)} left`;
     });
   }
-  function renderAll() { renderHealth(); renderHero(); renderChanges(); renderMain(); }
+  function renderAll() { renderHealth(); renderHero(); renderChanges(); renderDiagram(); renderMain(); }
 
   async function getJSON(path, fallback) {
     try {
@@ -300,6 +404,11 @@
   seg("layout", v => layout = v);
   if (location.hash === "#timeline") document.querySelector('[data-layout="timeline"]').click();
   ["#q", "#catSel", "#sortSel"].forEach(s => $(s).addEventListener("input", renderMain));
+  $("#diagram").addEventListener("click", ev => { const g = ev.target.closest(".dg-item"); if (g) jumpTo(g.dataset.id); });
+  $("#diagram").addEventListener("keydown", ev => {
+    const g = ev.target.closest(".dg-item");
+    if (g && (ev.key === "Enter" || ev.key === " ")) { ev.preventDefault(); jumpTo(g.dataset.id); }
+  });
 
   const icsAbs = new URL("deadlines.ics", location.href);
   const webcal = icsAbs.href.replace(/^https?:/, "webcal:");
@@ -310,6 +419,6 @@
 
   load();
   setInterval(() => { renderHero(); tick(); }, 1000);
-  setInterval(() => { renderHealth(); renderMain(); }, 60e3);
+  setInterval(() => { renderHealth(); renderDiagram(); renderMain(); }, 60e3);
   setInterval(load, 30 * 60e3);
 })();

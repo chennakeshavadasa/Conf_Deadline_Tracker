@@ -177,3 +177,20 @@ footer{margin-top:28px;font-size:.95rem;color:var(--ink2);max-width:80ch}
   .controls .seg button{flex:1}
 }
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+
+/* ---------- deadline diagram (clock waveform) ---------- */
+.diagram{padding:18px 0 10px;margin-bottom:26px}
+.diag-top{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px 20px;padding:0 22px 6px}
+.lg-edge{width:4px;height:18px;border-radius:2px;background:var(--open)}
+.lg-edge.soon{background:var(--soon-mark)} .lg-edge.closed{background:#8E98A6}
+.diag-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 12px}
+#diagram svg{display:block;width:100%;min-width:980px;height:auto}
+#diagram text{font-family:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.dg-item{cursor:pointer}
+.dg-item:hover rect.pill,.dg-item:focus rect.pill{stroke-width:3}
+.dg-item:focus{outline:none}
+.dg-item:focus-visible rect.pill{stroke:var(--accent);stroke-width:3}
+.diag-foot{margin:4px 22px 0;font-size:.9rem;color:var(--muted)}
+.row.flash{animation:flash 1.6s ease-out}
+@keyframes flash{0%{background:#FFF1D1}100%{background:transparent}}
+@media (prefers-reduced-motion:reduce){.row.flash{animation:none;outline:3px solid var(--soon-mark)}}

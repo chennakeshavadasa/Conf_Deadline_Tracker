@@ -38,6 +38,20 @@
     </section>
   </div>
 
+  <section class="card diagram" aria-labelledby="diagTitle">
+    <div class="diag-top">
+      <h2 id="diagTitle">Deadlines from today</h2>
+      <ul class="legend">
+        <li><span class="lg-edge open"></span>Open</li>
+        <li><span class="lg-edge soon"></span>Closing within 14 days</li>
+        <li><span class="lg-edge closed"></span>Closed</li>
+        <li><span class="lg-today"></span>Today</li>
+      </ul>
+    </div>
+    <div class="diag-scroll"><div id="diagram"></div></div>
+    <p class="diag-foot">Each line drops to the day its paper deadline falls. The shaded area is the past. Click a label to jump to that conference.</p>
+  </section>
+
   <div class="controls" id="content">
     <div class="seg" role="group" aria-label="Layout">
       <button data-layout="list" aria-pressed="true">List</button>
