@@ -322,7 +322,11 @@
       el.textContent = t.d > 0 ? `${t.d} days ${t.h} h left` : `${pad(t.h)}:${pad(t.m)}:${pad(t.s)} left`;
     });
   }
-  function renderAll() { renderHealth(); renderHero(); renderChanges(); renderMain(); }
+  function renderAll() {
+    [renderHealth, renderHero, renderChanges, renderMain].forEach(fn => {
+      try { fn(); } catch (err) { console.error(fn.name, err); }
+    });
+  }
 
   async function getJSON(path, fallback) {
     try {
@@ -336,7 +340,11 @@
     series = Object.fromEntries(s.map(x => [x.id, x]));
     editions = e; changes = c; meta = m;
     if (!editions.length) { $("#listView").innerHTML = `<div class="empty">Couldn't load the conference data. Refresh the page to try again.</div>`; return; }
-    renderAll();
+    try { renderAll(); }
+    catch (err) {
+      console.error(err);
+      $("#listView").innerHTML = `<div class="empty">Something went wrong while showing the conferences. Try a hard refresh (Ctrl + Shift + R). If it keeps happening, make sure <b>style.css</b> and <b>app.js</b> in <b>docs/assets/</b> are the latest versions.</div>`;
+    }
   }
 
   // ---------- wiring ----------
@@ -346,18 +354,19 @@
     renderMain();
   }));
   seg("view", v => view = v);
-  ["#q", "#catSel", "#sortSel"].forEach(s => $(s).addEventListener("input", renderMain));
-  $("#timeline").addEventListener("click", ev => {
+  const on = (sel, ev, fn) => { const el = $(sel); if (el) el.addEventListener(ev, fn); };
+  ["#q", "#catSel", "#sortSel"].forEach(s => on(s, "input", renderMain));
+  on("#timeline", "click", ev => {
     if (ev.target.closest(".tl-toggle")) { showClosed = !showClosed; renderMain(); return; }
     const r = ev.target.closest(".tl-row"); if (r) jumpTo(r.dataset.id);
   });
 
   const icsAbs = new URL("deadlines.ics", location.href);
   const webcal = icsAbs.href.replace(/^https?:/, "webcal:");
-  $("#subCal").href = webcal;
-  $("#subGcal").href = "https://calendar.google.com/calendar/r?cid=" + encodeURIComponent(webcal);
+  if ($("#subCal")) $("#subCal").href = webcal;
+  if ($("#subGcal")) $("#subGcal").href = "https://calendar.google.com/calendar/r?cid=" + encodeURIComponent(webcal);
   const repo = repoUrl();
-  if (repo) $("#repoLinks").innerHTML = `Missing a conference? <a href="${repo}/issues/new?template=new-conference.yml" target="_blank" rel="noopener">Suggest one</a>. See <a href="${repo}/commits/main/docs/data/editions.json" target="_blank" rel="noopener">every data change</a> or the <a href="${repo}" target="_blank" rel="noopener">source code</a>.`;
+  if (repo && $("#repoLinks")) $("#repoLinks").innerHTML = `Missing a conference? <a href="${repo}/issues/new?template=new-conference.yml" target="_blank" rel="noopener">Suggest one</a>. See <a href="${repo}/commits/main/docs/data/editions.json" target="_blank" rel="noopener">every data change</a> or the <a href="${repo}" target="_blank" rel="noopener">source code</a>.`;
 
   load();
   setInterval(() => { renderHero(); tick(); }, 1000);
