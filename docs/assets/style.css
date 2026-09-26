@@ -57,7 +57,7 @@ h1{font-stretch:75%;font-weight:800;font-size:clamp(2.4rem,5.5vw,3.8rem);line-he
 .changes time{display:block;color:var(--muted);font-size:.85rem}
 .kind{display:inline-block;font-size:.78rem;font-weight:700;padding:1px 7px;border-radius:4px;margin-right:6px}
 .kind.extended{background:var(--soon-bg);color:var(--soon)} .kind.announced{background:var(--open-bg);color:var(--open)}
-.kind.new-edition{background:var(--accent-bg);color:var(--accent)} .kind.changed{background:#FDE8E6;color:var(--today)}
+.kind.new-edition{background:var(--accent-bg);color:var(--accent)} .kind.note{background:var(--closed-bg);color:var(--closed)} .kind.changed{background:#FDE8E6;color:var(--today)}
 
 /* ---------- controls ---------- */
 .controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:0 0 10px}

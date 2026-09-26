@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Follow updates: chip conference deadlines</title>
+  <link rel="alternate" type="application/rss+xml" title="Deadline changes" href="feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .page{max-width:880px}
+    .back{display:inline-block;margin-bottom:18px;font-weight:600}
+    .ways{display:grid;gap:14px;margin:22px 0 30px}
+    .way{padding:20px 22px}
+    .way h2{margin-bottom:4px}
+    .way p{margin:0 0 12px;color:var(--ink2)}
+    .copy{display:flex;gap:8px;flex-wrap:wrap}
+    .copy input{flex:1;min-width:240px;font-size:.95rem;padding:10px 12px;border:2px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--ink)}
+    .copy button{font-size:.95rem;font-weight:700;padding:10px 16px;border:2px solid var(--ink);border-radius:8px;background:var(--ink);color:#fff;cursor:pointer}
+    .log{padding:20px 22px}
+    .log ol{list-style:none;margin:10px 0 0;padding:0}
+    .log li{padding:12px 0;border-top:1px solid var(--rule2);font-size:1rem;color:var(--ink2)}
+    .log li:first-child{border-top:0}
+    .log time{display:block;font-size:.88rem;color:var(--muted)}
+  </style>
+</head>
+<body>
+<div class="wrap page">
+  <a class="back" href="./">← Back to deadlines</a>
+  <h1>Follow updates</h1>
+  <p class="sub">Get told when a deadline is extended, a new deadline is announced, or next year's edition is added. Pick whichever suits you.</p>
+
+  <div class="ways">
+    <section class="card way">
+      <h2>Calendar (easiest)</h2>
+      <p>Every deadline and conference appears in your calendar, with a reminder 7 days before each deadline. When the bot finds an extension, your calendar updates by itself.</p>
+      <div class="subscribe" style="justify-content:flex-start">
+        <a id="gcal" class="btn" href="#" target="_blank" rel="noopener">Add to Google Calendar</a>
+        <a id="webcal" class="btn" href="deadlines.ics">Apple / Outlook calendar</a>
+      </div>
+    </section>
+
+    <section class="card way">
+      <h2>RSS reader</h2>
+      <p>If you use a feed reader such as Feedly, Inoreader or Thunderbird, add this address to it. Each change becomes a new item. Opening the address directly in a browser only shows raw data, which is normal.</p>
+      <div class="copy">
+        <input id="feedUrl" readonly aria-label="Feed address">
+        <button id="copyBtn">Copy address</button>
+      </div>
+    </section>
+
+    <section class="card way" id="watchCard" hidden>
+      <h2>GitHub notifications</h2>
+      <p>If you have a GitHub account, open the repository and choose <strong>Watch → Custom → Issues</strong> to get emails about corrections and review requests.</p>
+      <a id="repoLink" class="btn" href="#" target="_blank" rel="noopener">Open repository</a>
+    </section>
+  </div>
+
+  <section class="card log">
+    <h2>Change history</h2>
+    <ol id="log"><li>Loading…</li></ol>
+  </section>
+</div>
+<script>
+(() => {
+  const abs = p => new URL(p, location.href).href;
+  const webcal = abs("deadlines.ics").replace(/^https?:/, "webcal:");
+  document.getElementById("webcal").href = webcal;
+  document.getElementById("gcal").href = "https://calendar.google.com/calendar/r?cid=" + encodeURIComponent(webcal);
+  const feed = document.getElementById("feedUrl");
+  feed.value = abs("feed.xml");
+  document.getElementById("copyBtn").addEventListener("click", async e => {
+    try { await navigator.clipboard.writeText(feed.value); } catch { feed.select(); document.execCommand("copy"); }
+    e.target.textContent = "Copied";
+    setTimeout(() => e.target.textContent = "Copy address", 2000);
+  });
+  const m = location.hostname.match(/^([^.]+)\.github\.io$/);
+  const first = location.pathname.split("/").filter(Boolean)[0];
+  const repo = (window.TRACKER_CONFIG || {}).repo || (m && first && !first.includes(".") ? `https://github.com/${m[1]}/${first}` : "");
+  if (repo) { document.getElementById("watchCard").hidden = false; document.getElementById("repoLink").href = repo; }
+
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const fmt = d => new Date(d + "T00:00:00").toLocaleDateString(undefined, { day: "numeric", month: "long", year: "numeric" });
+  const label = { extended: "Extended", announced: "Announced", "new-edition": "New edition", changed: "Changed", note: "Note" };
+  fetch("data/changelog.json?v=" + Date.now()).then(r => r.json()).then(list => {
+    const items = list.slice().reverse();
+    document.getElementById("log").innerHTML = items.length ? items.map(c =>
+      `<li><time>${fmt(c.date)}</time><span class="kind ${esc(c.kind)}">${label[c.kind] || esc(c.kind)}</span>${esc(c.message)}${c.source ? ` <a href="${esc(c.source)}" target="_blank" rel="noopener">Source</a>` : ""}</li>`
+    ).join("") : "<li>No changes yet.</li>";
+  }).catch(() => { document.getElementById("log").innerHTML = "<li>Couldn't load the change history. Refresh to try again.</li>"; });
+})();
+</script>
+</body>
+</html>

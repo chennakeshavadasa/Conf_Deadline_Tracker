@@ -13,6 +13,9 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 DATA = DOCS / "data"
 SITE_URL = os.environ.get("SITE_URL", "").rstrip("/")
+if not SITE_URL and "/" in os.environ.get("GITHUB_REPOSITORY", ""):
+    _owner, _repo = os.environ["GITHUB_REPOSITORY"].split("/", 1)
+    SITE_URL = f"https://{_owner}.github.io/{_repo}"
 TODAY = dt.date.today()
 
 
@@ -50,7 +53,7 @@ def build_rss(changes: list[dict]) -> str:
 <rss version="2.0">
 <channel>
   <title>Chip conference deadlines: changes</title>
-  <link>{escape(SITE_URL or 'https://github.com')}</link>
+  <link>{escape(SITE_URL + '/updates.html' if SITE_URL else 'https://github.com')}</link>
   <description>New editions, announced deadlines and extensions for analog, VLSI and CAS conferences.</description>
   <lastBuildDate>{format_datetime(dt.datetime.now(dt.timezone.utc))}</lastBuildDate>
 {chr(10).join(items)}
