@@ -1,0 +1,23 @@
+name: Suggest a conference
+description: Ask for a conference series to be tracked.
+title: "Track: "
+labels: ["new conference"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Conference name and acronym
+      placeholder: "IEEE International Symposium on Low Power Electronics and Design (ISLPED)"
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Official website
+      placeholder: "https://..."
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why is it useful for circuit and VLSI students?

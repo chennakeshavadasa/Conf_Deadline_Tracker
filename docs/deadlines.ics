@@ -1,0 +1,890 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//conference-tracker//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Chip conference deadlines
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:aicas-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270920
+DTEND;VALUE=DATE:20270923
+SUMMARY:AICAS 2027
+LOCATION:Hangzhou\, China
+DESCRIPTION:International Conference on AI Circuits and Systems\nhttps://i
+ eee-cas.org/
+URL:https://ieee-cas.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:apccas-2026-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260522
+DTEND;VALUE=DATE:20260523
+SUMMARY:APCCAS 2026 paper deadline
+DESCRIPTION:Asia Pacific Conference on Circuits and Systems\n\nhttps://apc
+ cas2026.org/
+URL:https://apccas2026.org/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:APCCAS 2026 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:apccas-2026-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20261025
+DTEND;VALUE=DATE:20261029
+SUMMARY:APCCAS 2026
+LOCATION:Fukuoka\, Japan
+DESCRIPTION:Asia Pacific Conference on Circuits and Systems\nhttps://apcca
+ s2026.org/
+URL:https://apccas2026.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:apccas-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270922
+DTEND;VALUE=DATE:20270925
+SUMMARY:APCCAS 2027
+LOCATION:Hangzhou\, China
+DESCRIPTION:Asia Pacific Conference on Circuits and Systems\nhttps://ieee-
+ cas.org/
+URL:https://ieee-cas.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:aspdac-2027-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260718
+DTEND;VALUE=DATE:20260719
+SUMMARY:ASP-DAC 2027 paper deadline (AoE)
+DESCRIPTION:Asia and South Pacific Design Automation Conference\n\nhttps:/
+ /www.aspdac.com/aspdac2027/
+URL:https://www.aspdac.com/aspdac2027/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:ASP-DAC 2027 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:aspdac-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270125
+DTEND;VALUE=DATE:20270126
+SUMMARY:ASP-DAC 2027
+LOCATION:
+DESCRIPTION:Asia and South Pacific Design Automation Conference\nhttps://w
+ ww.aspdac.com/aspdac2027/
+URL:https://www.aspdac.com/aspdac2027/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:asscc-2026-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260603
+DTEND;VALUE=DATE:20260604
+SUMMARY:A-SSCC 2026 paper deadline
+DESCRIPTION:Asian Solid-State Circuits Conference\nSelected papers are ext
+ ended into JSSC and SSC-L special issues.\nhttps://a-sscc2026.org/
+URL:https://a-sscc2026.org/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:A-SSCC 2026 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:asscc-2026-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20261101
+DTEND;VALUE=DATE:20261105
+SUMMARY:A-SSCC 2026
+LOCATION:Taichung\, Taiwan
+DESCRIPTION:Asian Solid-State Circuits Conference\nhttps://a-sscc2026.org/
+URL:https://a-sscc2026.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:biocas-2026-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260626
+DTEND;VALUE=DATE:20260627
+SUMMARY:BioCAS 2026 paper deadline
+DESCRIPTION:Biomedical Circuits and Systems Conference\n\nhttps://ieee-cas
+ .org/
+URL:https://ieee-cas.org/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:BioCAS 2026 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:biocas-2026-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20261008
+DTEND;VALUE=DATE:20261011
+SUMMARY:BioCAS 2026
+LOCATION:Incheon\, Korea
+DESCRIPTION:Biomedical Circuits and Systems Conference\nhttps://ieee-cas.o
+ rg/
+URL:https://ieee-cas.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:biocas-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20271014
+DTEND;VALUE=DATE:20271017
+SUMMARY:BioCAS 2027
+LOCATION:Oslo\, Norway
+DESCRIPTION:Biomedical Circuits and Systems Conference\nhttps://ieee-cas.o
+ rg/
+URL:https://ieee-cas.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:cicc-2027-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20261116
+DTEND;VALUE=DATE:20261117
+SUMMARY:CICC 2027 paper deadline (PT)
+DESCRIPTION:Custom Integrated Circuits Conference\nOrganizers say the dead
+ line will not be extended.\nhttps://www.ieee-cicc.org/
+URL:https://www.ieee-cicc.org/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:CICC 2027 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cicc-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270418
+DTEND;VALUE=DATE:20270422
+SUMMARY:CICC 2027
+LOCATION:San Diego\, USA
+DESCRIPTION:Custom Integrated Circuits Conference\nhttps://www.ieee-cicc.o
+ rg/
+URL:https://www.ieee-cicc.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:cicc-2028-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20280417
+DTEND;VALUE=DATE:20280422
+SUMMARY:CICC 2028
+LOCATION:Cambridge\, Massachusetts\, USA
+DESCRIPTION:Custom Integrated Circuits Conference\nhttps://www.ieee-cicc.o
+ rg/
+URL:https://www.ieee-cicc.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:dac-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270710
+DTEND;VALUE=DATE:20270717
+SUMMARY:DAC 2027
+LOCATION:San Jose\, USA
+DESCRIPTION:Design Automation Conference\nhttps://dac.com/2027
+URL:https://dac.com/2027
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:date-2027-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260920
+DTEND;VALUE=DATE:20260921
+SUMMARY:DATE 2027 paper deadline (AoE)
+DESCRIPTION:Design\, Automation and Test in Europe\n\nhttps://www.date-con
+ ference.com/
+URL:https://www.date-conference.com/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:DATE 2027 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:date-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270322
+DTEND;VALUE=DATE:20270323
+SUMMARY:DATE 2027
+LOCATION:
+DESCRIPTION:Design\, Automation and Test in Europe\nhttps://www.date-confe
+ rence.com/
+URL:https://www.date-conference.com/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:dcis-2026-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260517
+DTEND;VALUE=DATE:20260518
+SUMMARY:DCIS 2026 paper deadline
+DESCRIPTION:Conference on Design of Circuits and Integrated Systems\n\nhtt
+ ps://ieee-cas.org/
+URL:https://ieee-cas.org/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:DCIS 2026 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:dcis-2026-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20261118
+DTEND;VALUE=DATE:20261121
+SUMMARY:DCIS 2026
+LOCATION:Ericeira\, Portugal
+DESCRIPTION:Conference on Design of Circuits and Integrated Systems\nhttps
+ ://ieee-cas.org/
+URL:https://ieee-cas.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:iccad-2026-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260407
+DTEND;VALUE=DATE:20260408
+SUMMARY:ICCAD 2026 paper deadline
+DESCRIPTION:International Conference on Computer-Aided Design\n\nhttps://i
+ ccad.com/2026
+URL:https://iccad.com/2026
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:ICCAD 2026 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:iccad-2026-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20261108
+DTEND;VALUE=DATE:20261113
+SUMMARY:ICCAD 2026
+LOCATION:San Jose\, USA
+DESCRIPTION:International Conference on Computer-Aided Design\nhttps://icc
+ ad.com/2026
+URL:https://iccad.com/2026
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:iccd-2026-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260522
+DTEND;VALUE=DATE:20260523
+SUMMARY:ICCD 2026 paper deadline
+DESCRIPTION:International Conference on Computer Design\n\nhttps://www.icc
+ d-conf.com/
+URL:https://www.iccd-conf.com/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:ICCD 2026 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:iccd-2026-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20261116
+DTEND;VALUE=DATE:20261117
+SUMMARY:ICCD 2026
+LOCATION:
+DESCRIPTION:International Conference on Computer Design\nhttps://www.iccd-
+ conf.com/
+URL:https://www.iccd-conf.com/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:icecs-2026-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260615
+DTEND;VALUE=DATE:20260616
+SUMMARY:ICECS 2026 paper deadline
+DESCRIPTION:International Conference on Electronics\, Circuits and Systems
+ \n\nhttps://www.icecs2026.gr/
+URL:https://www.icecs2026.gr/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:ICECS 2026 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:icecs-2026-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20261108
+DTEND;VALUE=DATE:20261112
+SUMMARY:ICECS 2026
+LOCATION:Thessaloniki\, Greece
+DESCRIPTION:International Conference on Electronics\, Circuits and Systems
+ \nhttps://www.icecs2026.gr/
+URL:https://www.icecs2026.gr/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:icecs-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20271124
+DTEND;VALUE=DATE:20271127
+SUMMARY:ICECS 2027
+LOCATION:Dubai\, UAE
+DESCRIPTION:International Conference on Electronics\, Circuits and Systems
+ \nhttps://ieee-cas.org/
+URL:https://ieee-cas.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:icm-2026-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260829
+DTEND;VALUE=DATE:20260830
+SUMMARY:ICM 2026 paper deadline
+DESCRIPTION:International Conference on Microelectronics\n\nhttps://ieee-c
+ as.org/
+URL:https://ieee-cas.org/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:ICM 2026 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:icm-2026-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20261207
+DTEND;VALUE=DATE:20261211
+SUMMARY:ICM 2026
+LOCATION:Sarawak\, Malaysia
+DESCRIPTION:International Conference on Microelectronics\nhttps://ieee-cas
+ .org/
+URL:https://ieee-cas.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:iedm-2026-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260716
+DTEND;VALUE=DATE:20260717
+SUMMARY:IEDM 2026 paper deadline
+DESCRIPTION:International Electron Devices Meeting\n\nhttps://www.ieee-ied
+ m.org/
+URL:https://www.ieee-iedm.org/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:IEDM 2026 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:iedm-2026-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20261206
+DTEND;VALUE=DATE:20261207
+SUMMARY:IEDM 2026
+LOCATION:
+DESCRIPTION:International Electron Devices Meeting\nhttps://www.ieee-iedm.
+ org/
+URL:https://www.ieee-iedm.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:iscas-2027-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20261013
+DTEND;VALUE=DATE:20261014
+SUMMARY:ISCAS 2027 paper deadline (UTC-5)
+DESCRIPTION:International Symposium on Circuits and Systems\nAuthor notifi
+ cation 11 Jan 2027.\nhttps://2027.ieee-iscas.org/
+URL:https://2027.ieee-iscas.org/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:ISCAS 2027 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:iscas-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270606
+DTEND;VALUE=DATE:20270610
+SUMMARY:ISCAS 2027
+LOCATION:Bordeaux\, France
+DESCRIPTION:International Symposium on Circuits and Systems\nhttps://2027.
+ ieee-iscas.org/
+URL:https://2027.ieee-iscas.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:iscas-2028-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20280528
+DTEND;VALUE=DATE:20280601
+SUMMARY:ISCAS 2028
+LOCATION:Minneapolis\, USA
+DESCRIPTION:International Symposium on Circuits and Systems\nhttps://ieee-
+ cas.org/
+URL:https://ieee-cas.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:isicas-2026-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260511
+DTEND;VALUE=DATE:20260512
+SUMMARY:ISICAS 2026 paper deadline
+DESCRIPTION:International Symposium on Integrated Circuits and Systems\n\n
+ https://ieee-cas.org/
+URL:https://ieee-cas.org/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:ISICAS 2026 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:isicas-2026-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20261204
+DTEND;VALUE=DATE:20261207
+SUMMARY:ISICAS 2026
+LOCATION:Torino\, Italy
+DESCRIPTION:International Symposium on Integrated Circuits and Systems\nht
+ tps://ieee-cas.org/
+URL:https://ieee-cas.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:isicas-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20271025
+DTEND;VALUE=DATE:20271028
+SUMMARY:ISICAS 2027
+LOCATION:Athens\, Greece
+DESCRIPTION:International Symposium on Integrated Circuits and Systems\nht
+ tps://ieee-cas.org/
+URL:https://ieee-cas.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:isocc-2026-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260724
+DTEND;VALUE=DATE:20260725
+SUMMARY:ISOCC 2026 paper deadline
+DESCRIPTION:International SoC Design Conference\n\nhttps://isocc.org/
+URL:https://isocc.org/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:ISOCC 2026 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:isocc-2026-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20261011
+DTEND;VALUE=DATE:20261015
+SUMMARY:ISOCC 2026
+LOCATION:Incheon\, Korea
+DESCRIPTION:International SoC Design Conference\nhttps://isocc.org/
+URL:https://isocc.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ispd-2027-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260928
+DTEND;VALUE=DATE:20260929
+SUMMARY:ISPD 2027 paper deadline
+DESCRIPTION:International Symposium on Physical Design\nDeadline from a co
+ mmunity table\; not yet confirmed on the official site.\nhttps://ispd.cc/
+URL:https://ispd.cc/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:ISPD 2027 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:ispd-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270331
+DTEND;VALUE=DATE:20270401
+SUMMARY:ISPD 2027
+LOCATION:
+DESCRIPTION:International Symposium on Physical Design\nhttps://ispd.cc/
+URL:https://ispd.cc/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:isqed-2027-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260917
+DTEND;VALUE=DATE:20260918
+SUMMARY:ISQED 2027 paper deadline
+DESCRIPTION:International Symposium on Quality Electronic Design\n\nhttps:
+ //www.isqed.org/
+URL:https://www.isqed.org/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:ISQED 2027 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:isqed-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270408
+DTEND;VALUE=DATE:20270409
+SUMMARY:ISQED 2027
+LOCATION:
+DESCRIPTION:International Symposium on Quality Electronic Design\nhttps://
+ www.isqed.org/
+URL:https://www.isqed.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:isscc-2027-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260909
+DTEND;VALUE=DATE:20260910
+SUMMARY:ISSCC 2027 paper deadline
+DESCRIPTION:International Solid-State Circuits Conference\nRegular papers 
+ closed. Late-Breaking News intent due 7 Oct 2026\; Student Research Previ
+ ew abstracts due 28 Oct 2026.\nhttps://www.isscc.org/
+URL:https://www.isscc.org/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:ISSCC 2027 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:isscc-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270214
+DTEND;VALUE=DATE:20270219
+SUMMARY:ISSCC 2027
+LOCATION:San Francisco\, USA
+DESCRIPTION:International Solid-State Circuits Conference\nhttps://www.iss
+ cc.org/
+URL:https://www.isscc.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:isscc-2028-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20280220
+DTEND;VALUE=DATE:20280225
+SUMMARY:ISSCC 2028
+LOCATION:San Francisco\, USA
+DESCRIPTION:International Solid-State Circuits Conference\nhttps://www.iss
+ cc.org/future-conferences
+URL:https://www.isscc.org/future-conferences
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:lascas-2027-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260922
+DTEND;VALUE=DATE:20260923
+SUMMARY:LASCAS 2027 paper deadline
+DESCRIPTION:Latin American Symposium on Circuits and Systems\nCASS homepag
+ e showed a flagship call extended to 29 Sep 2026\, possibly this one.\nht
+ tps://www.ieee-lascas.org/
+URL:https://www.ieee-lascas.org/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:LASCAS 2027 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:lascas-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270223
+DTEND;VALUE=DATE:20270227
+SUMMARY:LASCAS 2027
+LOCATION:Panama City\, Panama
+DESCRIPTION:Latin American Symposium on Circuits and Systems\nhttps://www.
+ ieee-lascas.org/
+URL:https://www.ieee-lascas.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:lascas-2028-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20280221
+DTEND;VALUE=DATE:20280225
+SUMMARY:LASCAS 2028
+LOCATION:Córdoba\, Argentina
+DESCRIPTION:Latin American Symposium on Circuits and Systems\nhttps://ieee
+ -cas.org/
+URL:https://ieee-cas.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:mwscas-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270808
+DTEND;VALUE=DATE:20270813
+SUMMARY:MWSCAS 2027
+LOCATION:Lafayette\, Louisiana\, USA
+DESCRIPTION:International Midwest Symposium on Circuits and Systems\nhttps
+ ://ieee-cas.org/
+URL:https://ieee-cas.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:newcas-2027-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270201
+DTEND;VALUE=DATE:20270202
+SUMMARY:NEWCAS 2027 paper deadline
+DESCRIPTION:IEEE Interregional NEWCAS Conference\nConference site says 1 F
+ eb\; CASS lists 8 Feb. Submission site opens 1 Dec 2026.\nhttps://ieee-ne
+ wcas.org/2027
+URL:https://ieee-newcas.org/2027
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:NEWCAS 2027 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:newcas-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270620
+DTEND;VALUE=DATE:20270624
+SUMMARY:NEWCAS 2027
+LOCATION:Cork\, Ireland
+DESCRIPTION:IEEE Interregional NEWCAS Conference\nhttps://ieee-newcas.org/
+ 2027
+URL:https://ieee-newcas.org/2027
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:newcas-2028-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20280625
+DTEND;VALUE=DATE:20280629
+SUMMARY:NEWCAS 2028
+LOCATION:St. John's\, Canada
+DESCRIPTION:IEEE Interregional NEWCAS Conference\nhttps://ieee-cas.org/
+URL:https://ieee-cas.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:norcas-2026-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260831
+DTEND;VALUE=DATE:20260901
+SUMMARY:NorCAS 2026 paper deadline
+DESCRIPTION:Nordic Circuits and Systems Conference\n\nhttps://events.tuni.
+ fi/norcas/
+URL:https://events.tuni.fi/norcas/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:NorCAS 2026 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:norcas-2026-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20261020
+DTEND;VALUE=DATE:20261022
+SUMMARY:NorCAS 2026
+LOCATION:Tampere\, Finland
+DESCRIPTION:Nordic Circuits and Systems Conference\nhttps://events.tuni.fi
+ /norcas/
+URL:https://events.tuni.fi/norcas/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:rfic-2027-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270106
+DTEND;VALUE=DATE:20270107
+SUMMARY:RFIC 2027 paper deadline (HST)
+DESCRIPTION:Radio Frequency Integrated Circuits Symposium\nCo-located with
+  IMS.\nhttps://rfic-ieee.org/
+URL:https://rfic-ieee.org/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:RFIC 2027 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:rfic-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270523
+DTEND;VALUE=DATE:20270526
+SUMMARY:RFIC 2027
+LOCATION:San Antonio\, USA
+DESCRIPTION:Radio Frequency Integrated Circuits Symposium\nhttps://rfic-ie
+ ee.org/
+URL:https://rfic-ieee.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:socc-2026-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260504
+DTEND;VALUE=DATE:20260505
+SUMMARY:SOCC 2026 paper deadline
+DESCRIPTION:International System-on-Chip Conference\n\nhttps://www.ieee-so
+ cc.org/
+URL:https://www.ieee-socc.org/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:SOCC 2026 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:socc-2026-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260930
+DTEND;VALUE=DATE:20261003
+SUMMARY:SOCC 2026
+LOCATION:Heidelberg\, Germany
+DESCRIPTION:International System-on-Chip Conference\nhttps://www.ieee-socc
+ .org/
+URL:https://www.ieee-socc.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:vlsi-2027-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270125
+DTEND;VALUE=DATE:20270126
+SUMMARY:VLSI Symposium 2027 paper deadline (JST)
+DESCRIPTION:Symposium on VLSI Technology and Circuits\n\nhttps://www.vlsis
+ ymposium.org/
+URL:https://www.vlsisymposium.org/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:VLSI Symposium 2027 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:vlsi-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270620
+DTEND;VALUE=DATE:20270625
+SUMMARY:VLSI Symposium 2027
+LOCATION:Kyoto\, Japan
+DESCRIPTION:Symposium on VLSI Technology and Circuits\nhttps://www.vlsisym
+ posium.org/
+URL:https://www.vlsisymposium.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:vlsi-2028-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20280611
+DTEND;VALUE=DATE:20280616
+SUMMARY:VLSI Symposium 2028
+LOCATION:Honolulu\, USA
+DESCRIPTION:Symposium on VLSI Technology and Circuits\nhttps://www.vlsisym
+ posium.org/
+URL:https://www.vlsisymposium.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:vlsid-2027-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260807
+DTEND;VALUE=DATE:20260808
+SUMMARY:VLSID 2027 paper deadline (PT)
+DESCRIPTION:International Conference on VLSI Design and Embedded Systems\n
+ \nhttps://vlsid.org/
+URL:https://vlsid.org/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:VLSID 2027 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:vlsid-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270102
+DTEND;VALUE=DATE:20270107
+SUMMARY:VLSID 2027
+LOCATION:Bengaluru\, India
+DESCRIPTION:International Conference on VLSI Design and Embedded Systems\n
+ https://vlsid.org/
+URL:https://vlsid.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:vlsisoc-2026-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20260504
+DTEND;VALUE=DATE:20260505
+SUMMARY:VLSI-SoC 2026 paper deadline
+DESCRIPTION:IFIP/IEEE International Conference on VLSI\n\nhttps://vlsi-soc
+ .com/
+URL:https://vlsi-soc.com/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:VLSI-SoC 2026 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:vlsisoc-2026-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20261011
+DTEND;VALUE=DATE:20261015
+SUMMARY:VLSI-SoC 2026
+LOCATION:Limassol\, Cyprus
+DESCRIPTION:IFIP/IEEE International Conference on VLSI\nhttps://vlsi-soc.c
+ om/
+URL:https://vlsi-soc.com/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:vts-2027-deadline@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20261120
+DTEND;VALUE=DATE:20261121
+SUMMARY:VTS 2027 paper deadline
+DESCRIPTION:VLSI Test Symposium\nDeadline from a community table\; not yet
+  confirmed on the official site.\nhttps://tttc-vts.org/
+URL:https://tttc-vts.org/
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:VTS 2027 deadline in 7 days
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:vts-2027-conference@conference-tracker
+DTSTAMP:20260926T164208Z
+DTSTART;VALUE=DATE:20270426
+DTEND;VALUE=DATE:20270427
+SUMMARY:VTS 2027
+LOCATION:
+DESCRIPTION:VLSI Test Symposium\nhttps://tttc-vts.org/
+URL:https://tttc-vts.org/
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR

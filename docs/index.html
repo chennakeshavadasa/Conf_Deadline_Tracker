@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chip conference deadlines</title>
+  <meta name="description" content="Live paper deadlines for analog, mixed-signal, VLSI and circuits & systems conferences: ISSCC, VLSI Symposium, CICC, ISCAS, BioCAS, AICAS, NEWCAS and more. Checked automatically every day.">
+  <link rel="alternate" type="application/rss+xml" title="Deadline changes" href="feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <script>
+    // Optional: set your repository URL if the automatic detection doesn't work
+    // (for example with a custom domain).
+    window.TRACKER_CONFIG = { repo: "" };
+  </script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Chip conference<br>deadlines</h1>
+      <p class="sub">Paper deadlines for analog, mixed-signal, VLSI and circuits &amp; systems conferences. A bot checks the official pages every day, adds each new year's edition as soon as the last one ends, and logs every change.</p>
+    </div>
+    <div class="monitor">
+      <div id="health"><span class="dot"></span>Loading…</div>
+      <div class="subscribe">
+        <a id="subCal" href="deadlines.ics">Subscribe in calendar</a>
+        <a id="subGcal" href="#" target="_blank" rel="noopener">Add to Google Calendar</a>
+        <a href="feed.xml">RSS</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" id="hero" aria-live="off"></section>
+
+  <div class="split">
+    <section class="panel diagram">
+      <h2>Deadlines over the next ten months</h2>
+      <p>Each edge marks a paper deadline. The dashed line is today.</p>
+      <div id="timeline"></div>
+    </section>
+    <section class="panel changes">
+      <h2>Recent changes</h2>
+      <ol id="changes"></ol>
+    </section>
+  </div>
+
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Show">
+      <button data-view="upcoming" aria-pressed="true">Upcoming</button>
+      <button data-view="open" aria-pressed="false">Open deadlines</button>
+      <button data-view="all" aria-pressed="false">All, including past</button>
+    </div>
+    <select id="catSel" aria-label="Category">
+      <option value="">All categories</option>
+      <option value="t1">Top tier (ISSCC, VLSI, CICC)</option>
+      <option value="ssc">Other SSCS &amp; RF</option>
+      <option value="casf">CAS flagships</option>
+      <option value="cas">Other CAS</option>
+      <option value="eda">EDA, VLSI, test &amp; devices</option>
+    </select>
+    <select id="sortSel" aria-label="Sort by">
+      <option value="deadline">Sort by deadline</option>
+      <option value="conf">Sort by conference date</option>
+    </select>
+    <input type="search" id="q" placeholder="Search name, topic or city">
+  </div>
+
+  <section class="list" id="list" aria-label="Conferences"><div class="empty">Loading conferences…</div></section>
+
+  <footer>
+    <p>Countdowns end at 23:59 on the deadline day in the conference's stated time zone when known, otherwise in your own time zone. Always confirm on the official page before submitting.</p>
+    <p><b>How dates are verified.</b> "Official page" means the date was read from the conference's own site and the quote was checked word for word. "Web search" means it came from search results and hasn't been confirmed on the official site yet. Changes the bot can't verify are held for a person to review instead of being published.</p>
+    <p id="repoLinks"></p>
+  </footer>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

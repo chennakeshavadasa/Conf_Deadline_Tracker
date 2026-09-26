@@ -1,0 +1,346 @@
+# Conference series tracked by the bot.
+#
+# One entry per RECURRING conference (not per year). The tracker creates the
+# next year's edition automatically once the current one is over.
+#
+# Fields
+#   id           short unique id, lowercase, used in edition ids (e.g. iscas-2027)
+#   name         display name without year
+#   full         full conference name
+#   org          organizing society
+#   category     t1 | ssc | casf | cas | eda   (see README)
+#   focus        one-line topic summary
+#   url          main/official website (always checked)
+#   edition_url  optional per-year site, {year} is replaced (e.g. https://{year}.ieee-iscas.org/)
+#   extra_urls   optional list of extra official pages to check, {year} allowed
+#   typical      optional hint shown while a deadline is not announced
+#
+# Shared sources are listing pages that cover many conferences. The tracker
+# reads them once per run and only keeps the text around each conference name.
+shared_sources:
+  - url: https://ieee-cas.org/conference-events/full-conference-list
+    official: true
+    applies_to: [casf, cas, t1]
+  - url: https://ieee-cas.org/conference-events/full-conference-list?page=1
+    official: true
+    applies_to: [casf, cas, t1]
+  - url: https://mtt.org/mtt-s-sponsored-conferences/
+    official: true
+    applies_to: [ssc]
+  - url: https://www.cse.chalmers.se/research/group/vlsi/conference/
+    official: false          # community-maintained table, used as a hint only
+    applies_to: [t1, ssc, casf, cas, eda]
+
+series:
+  # ---------- Top tier ----------
+  - id: isscc
+    name: ISSCC
+    full: International Solid-State Circuits Conference
+    org: IEEE SSCS
+    category: t1
+    focus: All IC design (analog, RF, digital, memory, power)
+    url: https://www.isscc.org/
+    extra_urls: ["https://www.isscc.org/future-conferences"]
+    typical: Paper deadline usually early September
+
+  - id: vlsi
+    name: VLSI Symposium
+    full: Symposium on VLSI Technology and Circuits
+    org: IEEE / JSAP
+    category: t1
+    focus: Circuits and process technology
+    url: https://www.vlsisymposium.org/
+    typical: Paper deadline usually late January
+
+  - id: cicc
+    name: CICC
+    full: Custom Integrated Circuits Conference
+    org: IEEE SSCS
+    category: t1
+    focus: Analog, mixed-signal, RF and digital ICs
+    url: https://www.ieee-cicc.org/
+    extra_urls: ["https://www.ieee-cicc.org/{year}-cicc-author-submission-guidelines/"]
+    typical: Paper deadline usually mid-November
+
+  # ---------- Other SSCS / RF ----------
+  - id: esserc
+    name: ESSERC
+    full: European Solid-State Electronics Research Conference
+    org: IEEE SSCS / EDS
+    category: ssc
+    focus: Circuits and devices (formerly ESSCIRC/ESSDERC)
+    url: https://www.esserc.org/
+    edition_url: https://www.esserc{year}.org/
+    typical: Paper deadline usually early April
+
+  - id: asscc
+    name: A-SSCC
+    full: Asian Solid-State Circuits Conference
+    org: IEEE SSCS
+    category: ssc
+    focus: All IC design
+    url: https://www.asscc.org/
+    edition_url: https://a-sscc{year}.org/
+    typical: Paper deadline usually early June
+
+  - id: rfic
+    name: RFIC
+    full: Radio Frequency Integrated Circuits Symposium
+    org: IEEE MTT-S
+    category: ssc
+    focus: RF, mm-wave and THz ICs
+    url: https://rfic-ieee.org/
+    typical: Paper deadline usually early January
+
+  # ---------- CAS flagships ----------
+  - id: iscas
+    name: ISCAS
+    full: International Symposium on Circuits and Systems
+    org: IEEE CASS
+    category: casf
+    focus: Broad circuits and systems (CAS global flagship)
+    url: https://ieee-cas.org/
+    edition_url: https://{year}.ieee-iscas.org/
+    extra_urls: ["https://{year}.ieee-iscas.org/call-for-papers"]
+    typical: Paper deadline usually mid-October
+
+  - id: biocas
+    name: BioCAS
+    full: Biomedical Circuits and Systems Conference
+    org: IEEE CASS
+    category: casf
+    focus: Biomedical circuits, neural interfaces, sensors
+    url: https://ieee-cas.org/
+    typical: Paper deadline usually June
+
+  - id: aicas
+    name: AICAS
+    full: International Conference on AI Circuits and Systems
+    org: IEEE CASS
+    category: casf
+    focus: AI accelerators, in-memory computing
+    url: https://ieee-cas.org/
+
+  - id: isicas
+    name: ISICAS
+    full: International Symposium on Integrated Circuits and Systems
+    org: IEEE CASS
+    category: casf
+    focus: Integrated circuits and systems
+    url: https://ieee-cas.org/
+    typical: Paper deadline usually May
+
+  - id: newcas
+    name: NEWCAS
+    full: IEEE Interregional NEWCAS Conference
+    org: IEEE CASS
+    category: casf
+    focus: Circuits and systems
+    url: https://ieee-newcas.org/
+    edition_url: https://ieee-newcas.org/{year}
+    typical: Paper deadline usually early February
+
+  - id: mwscas
+    name: MWSCAS
+    full: International Midwest Symposium on Circuits and Systems
+    org: IEEE CASS
+    category: casf
+    focus: Broad circuits and systems
+    url: https://ieee-cas.org/
+    edition_url: https://mwscas{year}.org/
+    typical: Paper deadline usually mid-March
+
+  - id: apccas
+    name: APCCAS
+    full: Asia Pacific Conference on Circuits and Systems
+    org: IEEE CASS
+    category: casf
+    focus: Broad circuits and systems
+    url: https://ieee-cas.org/
+    edition_url: https://apccas{year}.org/
+    typical: Paper deadline usually May
+
+  - id: icecs
+    name: ICECS
+    full: International Conference on Electronics, Circuits and Systems
+    org: IEEE CASS
+    category: casf
+    focus: Broad circuits and systems
+    url: https://ieee-cas.org/
+    typical: Paper deadline usually June
+
+  - id: lascas
+    name: LASCAS
+    full: Latin American Symposium on Circuits and Systems
+    org: IEEE CASS
+    category: casf
+    focus: Broad circuits and systems
+    url: https://www.ieee-lascas.org/
+    typical: Paper deadline usually September
+
+  # ---------- Other CAS ----------
+  - id: socc
+    name: SOCC
+    full: International System-on-Chip Conference
+    org: IEEE CASS
+    category: cas
+    focus: SoC design
+    url: https://www.ieee-socc.org/
+
+  - id: isocc
+    name: ISOCC
+    full: International SoC Design Conference
+    org: IEEE CASS
+    category: cas
+    focus: SoC design
+    url: https://isocc.org/
+
+  - id: vlsisoc
+    name: VLSI-SoC
+    full: IFIP/IEEE International Conference on VLSI
+    org: IFIP / IEEE CASS
+    category: cas
+    focus: VLSI and SoC
+    url: https://vlsi-soc.com/
+
+  - id: norcas
+    name: NorCAS
+    full: Nordic Circuits and Systems Conference
+    org: IEEE CASS
+    category: cas
+    focus: Circuits and systems
+    url: https://events.tuni.fi/norcas/
+
+  - id: dcis
+    name: DCIS
+    full: Conference on Design of Circuits and Integrated Systems
+    org: IEEE CASS (technical co-sponsor)
+    category: cas
+    focus: Circuits and integrated systems
+    url: https://ieee-cas.org/
+
+  - id: icm
+    name: ICM
+    full: International Conference on Microelectronics
+    org: IEEE CASS (technical co-sponsor)
+    category: cas
+    focus: Microelectronics
+    url: https://ieee-cas.org/
+
+  # ---------- EDA, VLSI, test, devices ----------
+  - id: dac
+    name: DAC
+    full: Design Automation Conference
+    org: ACM / IEEE
+    category: eda
+    focus: Design automation, chips to systems
+    url: https://dac.com/
+    edition_url: https://dac.com/{year}
+    typical: Paper deadline usually mid-November
+
+  - id: iccad
+    name: ICCAD
+    full: International Conference on Computer-Aided Design
+    org: IEEE / ACM
+    category: eda
+    focus: Design automation
+    url: https://iccad.com/
+    edition_url: https://iccad.com/{year}
+    typical: Paper deadline usually April
+
+  - id: date
+    name: DATE
+    full: Design, Automation and Test in Europe
+    org: EDAA / IEEE / ACM
+    category: eda
+    focus: Design automation and test
+    url: https://www.date-conference.com/
+    typical: Paper deadline usually September
+
+  - id: aspdac
+    name: ASP-DAC
+    full: Asia and South Pacific Design Automation Conference
+    org: IEEE CEDA / ACM SIGDA
+    category: eda
+    focus: Design automation
+    url: https://www.aspdac.com/
+    edition_url: https://www.aspdac.com/aspdac{year}/
+    typical: Paper deadline usually July
+
+  - id: iccd
+    name: ICCD
+    full: International Conference on Computer Design
+    org: IEEE
+    category: eda
+    focus: Computer design and VLSI
+    url: https://www.iccd-conf.com/
+
+  - id: ispd
+    name: ISPD
+    full: International Symposium on Physical Design
+    org: ACM
+    category: eda
+    focus: Physical design
+    url: https://ispd.cc/
+
+  - id: isqed
+    name: ISQED
+    full: International Symposium on Quality Electronic Design
+    org: IEEE
+    category: eda
+    focus: Quality electronic design
+    url: https://www.isqed.org/
+
+  - id: vts
+    name: VTS
+    full: VLSI Test Symposium
+    org: IEEE
+    category: eda
+    focus: VLSI test
+    url: https://tttc-vts.org/
+
+  - id: islped
+    name: ISLPED
+    full: International Symposium on Low Power Electronics and Design
+    org: ACM / IEEE
+    category: eda
+    focus: Low-power circuits and design
+    url: https://www.islped.org/
+    edition_url: https://www.islped.org/{year}/
+    typical: Paper deadline usually March
+
+  - id: glsvlsi
+    name: GLSVLSI
+    full: Great Lakes Symposium on VLSI
+    org: ACM
+    category: eda
+    focus: VLSI and hardware design
+    url: https://www.glsvlsi.org/
+    typical: Paper deadline usually early March
+
+  - id: isvlsi
+    name: ISVLSI
+    full: IEEE Computer Society Annual Symposium on VLSI
+    org: IEEE CS
+    category: eda
+    focus: VLSI circuits and systems
+    url: https://www.ieee-isvlsi.org/
+    typical: Paper deadline usually February
+
+  - id: vlsid
+    name: VLSID
+    full: International Conference on VLSI Design and Embedded Systems
+    org: VLSI Society of India
+    category: eda
+    focus: VLSI design and embedded systems
+    url: https://vlsid.org/
+    typical: Paper deadline usually late July / early August
+
+  - id: iedm
+    name: IEDM
+    full: International Electron Devices Meeting
+    org: IEEE EDS
+    category: eda
+    focus: Semiconductor devices
+    url: https://www.ieee-iedm.org/
+    typical: Paper deadline usually mid-July
