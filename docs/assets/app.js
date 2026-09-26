@@ -16,7 +16,7 @@
 
   const $ = s => document.querySelector(s);
   let series = {}, editions = [], changes = [], meta = {};
-  let view = "upcoming", layout = "list";
+  let view = "upcoming", showClosed = false;
 
   // ---------- helpers ----------
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -184,170 +184,117 @@
     tick();
   }
 
-  // ---------- timeline (Gantt: deadline ◆ → waiting period → conference bar) ----------
+  // ---------- timeline: one row per conference  ◆ deadline ── time until conference ── ▬ conference ----------
   function renderTimeline(list) {
-    const now = new Date();
-    const t0 = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
-    const t1 = new Date(now.getFullYear(), now.getMonth() + TL_MONTHS, 1).getTime();
-    const pct = t => Math.max(0, Math.min(100, (t - t0) / (t1 - t0) * 100));
+    const MONTHS = 13, now = Date.now(), nd = new Date(now);
+    const t0 = new Date(nd.getFullYear(), nd.getMonth(), 1).getTime();
+    const t1 = new Date(nd.getFullYear(), nd.getMonth() + MONTHS, 1).getTime();
+    const pct = t => (t - t0) / (t1 - t0) * 100;
+    const clamp = p => Math.max(0, Math.min(100, p));
     const inWin = t => t != null && t >= t0 && t < t1;
+    const confStart = e => startOf(e.start), confEnd = e => e.end ? startOf(e.end) + DAY : (e.start ? startOf(e.start) + DAY : null);
 
-    const rows = list.filter(e => inWin(deadlineMs(e)) || inWin(startOf(e.start)));
-    const hidden = list.length - rows.length;
+    // rows: anything with a deadline or conference inside the window
+    const rows = list.filter(e => inWin(deadlineMs(e)) || inWin(confStart(e)) ||
+      (deadlineMs(e) && deadlineMs(e) < t0 && confStart(e) >= t1));
+    const outside = list.length - rows.length;
 
-    let months = "", grid = "";
-    for (let i = 0; i < TL_MONTHS; i++) {
-      const a = new Date(now.getFullYear(), now.getMonth() + i, 1), b = new Date(now.getFullYear(), now.getMonth() + i + 1, 1);
-      const l = pct(a.getTime()), w = pct(b.getTime()) - l;
-      const yr = a.getMonth() === 0 || i === 0;
-      months += `<div class="tl-month" style="left:${l}%;width:${w}%">${a.toLocaleDateString(undefined, { month: "short" })}${yr ? `<small>${a.getFullYear()}</small>` : ""}</div>`;
-      if (i) grid += `<i class="${a.getMonth() === 0 ? "yr" : ""}" style="left:${l}%"></i>`;
+    // header: years on top, months below
+    let years = "", months = "", grid = "";
+    let yStart = 0, yLabel = nd.getFullYear();
+    for (let i = 0; i <= MONTHS; i++) {
+      const d = new Date(nd.getFullYear(), nd.getMonth() + i, 1), p = pct(d.getTime());
+      if (i === MONTHS || (d.getMonth() === 0 && i > 0)) {
+        years += `<div class="tl-year" style="left:${yStart}%;width:${p - yStart}%">${yLabel}</div>`;
+        yStart = p; yLabel = d.getFullYear();
+      }
+      if (i < MONTHS) {
+        const w = pct(new Date(d.getFullYear(), d.getMonth() + 1, 1).getTime()) - p;
+        months += `<div class="tl-month${d.getMonth() === 0 ? " jan" : ""}" style="left:${p}%;width:${w}%">${d.toLocaleDateString(undefined, { month: "short" })}</div>`;
+        if (i) grid += `<i class="${d.getMonth() === 0 ? "yr" : ""}" style="left:${p}%"></i>`;
+      }
     }
-    const nowPct = pct(now.getTime());
+    const pn = pct(now);
 
-    const body = rows.map(e => {
-      const st = status(e), dl = deadlineMs(e), cs = startOf(e.start), ce = e.end ? startOf(e.end) + DAY : cs ? cs + DAY : null;
-      let html = "";
-      // waiting period between deadline and conference
+    const monthsBetween = (a, b) => {
+      const m = (b - a) / (30.44 * DAY);
+      return m < 1.5 ? `${Math.round((b - a) / DAY)} days` : `${Math.round(m)} months`;
+    };
+
+    const rowHtml = e => {
+      const st = status(e, now), dl = deadlineMs(e), cs = confStart(e), ce = confEnd(e);
+      let track = "";
+      // band between deadline and conference
       if (dl && cs && cs > dl && (inWin(dl) || inWin(cs) || (dl < t0 && cs >= t0))) {
-        const a = pct(dl), b = pct(cs);
-        if (b > a) html += `<span class="tl-wait" style="left:${a}%;width:${b - a}%"></span>`;
+        const a = clamp(pct(dl)), b = clamp(pct(cs));
+        if (b - a > 0.3) {
+          const fadeL = dl < t0 ? " fade-l" : "", fadeR = cs >= t1 ? " fade-r" : "";
+          track += `<span class="tl-gap${fadeL}${fadeR}" style="left:${a}%;width:${b - a}%"></span>`;
+          if (b - a > 9) track += `<span class="tl-gap-txt" style="left:${(a + b) / 2}%">${monthsBetween(dl, cs)}</span>`;
+        }
       }
-      // conference bar
+      // conference bar + label
       if (cs && cs < t1) {
-        const a = pct(cs), b = pct(ce);
-        html += `<span class="tl-conf" style="left:${a}%;width:max(8px, ${b - a}%)" title="${esc(e.name)}: ${fmtRange(e)}"></span>`;
+        const a = clamp(pct(cs)), b = clamp(pct(ce));
         const txt = `${fmtRange(e, true)}${e.location ? ", " + esc(e.location.split(",")[0]) : ""}`;
-        html += a > 72 ? `<span class="tl-txt left" style="left:calc(${a}% - 6px)">${txt}</span>`
-                       : `<span class="tl-txt" style="left:calc(${b}% + 8px)">${txt}</span>`;
+        track += `<span class="tl-conf" style="left:${a}%;width:max(10px, ${b - a}%)"></span>`;
+        track += a > 74 ? `<span class="tl-conf-txt left" style="right:calc(${100 - a}% + 8px)">${txt}</span>`
+                        : `<span class="tl-conf-txt" style="left:calc(${b}% + 10px)">${txt}</span>`;
       } else if (cs && cs >= t1) {
-        html += `<span class="tl-more">Conference ${fmtShort(e.start)} ${new Date(cs).getFullYear()} →</span>`;
+        track += `<span class="tl-beyond">Conference ${fmtShort(e.start)} ${new Date(cs).getFullYear()}</span>`;
       }
-      // deadline diamond
+      // deadline diamond + date
       if (inWin(dl)) {
         const a = pct(dl);
-        html += `<span class="tl-dl" style="left:${a}%" title="Paper deadline ${fmt(e.deadline)}"></span>`;
-        html += a > 80 ? `<span class="tl-txt dlt left" style="left:calc(${a}% - 12px)">${fmtShort(e.deadline)}</span>`
-                       : `<span class="tl-txt dlt" style="left:calc(${a}% + 12px)">${fmtShort(e.deadline)}</span>`;
+        track += `<span class="tl-dl" style="left:${a}%"></span>`;
+        track += a > 86 ? `<span class="tl-dl-txt left" style="right:calc(${100 - a}% + 14px)">${fmtShort(e.deadline)}</span>`
+                        : `<span class="tl-dl-txt" style="left:calc(${a}% + 14px)">${fmtShort(e.deadline)}</span>`;
       }
-      const sub = e.deadline ? `${isOpen(st) ? "Due" : st === "closed" ? "Closed" : ""} ${fmt(e.deadline)}` : "Deadline not announced";
-      return `<div class="tl-row s-${st}">
-        <div class="tl-label"><b>${esc(e.name)}</b><span>${sub}</span></div>
-        <div class="tl-track">${html}</div></div>`;
-    }).join("");
+      const days = dl ? Math.round(Math.abs(dl - now) / DAY) : 0;
+      const chip = { open: "Open", soon: "Closing soon", closed: "Closed", tba: "TBA" }[st];
+      const sub = st === "tba" ? (e.s.typical ? esc(e.s.typical.replace(/^Paper deadline usually /, "Usually ")) : "Not announced yet")
+        : st === "closed" ? (days <= 30 ? `${fmtShort(e.deadline)}, ${days <= 1 ? "yesterday" : days + " days ago"}` : fmt(e.deadline))
+        : days < 1 ? "Due today" : st === "soon" ? `${days} day${days === 1 ? "" : "s"} left`
+        : `${fmtShort(e.deadline)}, in ${days} days`;
+      return `<button type="button" class="tl-row s-${st}" data-id="${esc(e.id)}" aria-label="${esc(e.name)}. ${chip}. ${esc(sub)}. Conference ${fmtRange(e)}.">
+        <span class="tl-label"><b>${esc(e.name)}</b><span class="tl-sub"><span class="chip c-${st}">${chip}</span>${sub}</span></span>
+        <span class="tl-track">${track}</span>
+      </button>`;
+    };
 
-    $("#timelineView").innerHTML = `
-      <div class="tl-top">
-        <h2>Next ${TL_MONTHS} months</h2>
-        <ul class="legend">
-          <li><span class="lg-dl"></span>Paper deadline</li>
-          <li><span class="lg-wait"></span>Review period</li>
-          <li><span class="lg-conf"></span>Conference</li>
-          <li><span class="lg-today"></span>Today</li>
-        </ul>
-      </div>
-      ${rows.length ? `<div class="tl-scroll"><div class="tl">
-        <div class="tl-head"><div class="corner">Conference</div><div class="tl-months">${months}<span class="tl-now-tag" style="left:${nowPct}%">Today</span></div></div>
+    // group by deadline state when sorting by deadline
+    let body = "";
+    if ($("#sortSel").value === "deadline") {
+      const groups = [
+        ["Deadline open", rows.filter(e => isOpen(status(e, now)))],
+        ["Deadline not announced", rows.filter(e => status(e, now) === "tba")],
+        ["Closed, conference ahead", rows.filter(e => status(e, now) === "closed")],
+      ];
+      body = groups.filter(g => g[1].length).map(([t, g], i, arr) => {
+        const closedGroup = t.startsWith("Closed");
+        const collapsed = closedGroup && !showClosed && arr.length > 1;
+        const toggle = closedGroup && arr.length > 1
+          ? `<button type="button" class="tl-toggle" aria-expanded="${!collapsed}">${collapsed ? "Show" : "Hide"}</button>` : "";
+        return `<div class="tl-group"><div class="tl-group-in"><span>${t}</span><em>${g.length}</em>${toggle}</div></div>` + (collapsed ? "" : g.map(rowHtml).join(""));
+      }).join("");
+    } else body = rows.map(rowHtml).join("");
+
+    $("#timeline").innerHTML = rows.length ? `<div class="tl-scroll"><div class="tl">
+        <div class="tl-head">
+          <div class="corner">Conference</div>
+          <div class="tl-scale"><div class="tl-years">${years}</div><div class="tl-months">${months}</div></div>
+        </div>
         <div class="tl-body">
-          <div class="tl-grid">${grid}<div class="tl-now" style="left:${nowPct}%"></div></div>
+          <div class="tl-bg" aria-hidden="true"><span class="tl-past" style="width:${clamp(pn)}%"></span>${grid}<span class="tl-now" style="left:${pn}%"></span></div>
           ${body}
-        </div></div></div>` : `<div class="empty">Nothing in the next ${TL_MONTHS} months matches these filters.</div>`}
-      ${hidden > 0 && rows.length ? `<p class="tl-foot">${hidden} more conference${hidden > 1 ? "s" : ""} fall outside this window. Switch to List to see them.</p>` : ""}`;
-  }
-
-
-  // ---------- deadline diagram: clock waveform with rising edges at each deadline ----------
-  function renderDiagram() {
-    const W = 1200, padL = 16, padR = 16, MONTHS = 10;
-    const now = new Date(), nowMs = now.getTime();
-    const t0 = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
-    const t1 = new Date(now.getFullYear(), now.getMonth() + MONTHS, 1).getTime();
-    const x = t => padL + (t - t0) / (t1 - t0) * (W - padL - padR);
-    const items = join().filter(e => e.deadline && deadlineMs(e) >= t0 && deadlineMs(e) < t1)
-      .sort((a, b) => deadlineMs(a) - deadlineMs(b));
-
-    // label boxes: name on line 1, date + distance on line 2; width from text length
-    const CH_NAME = 9.2, CH_SUB = 7.6, BOX_H = 44, GAP = 10;
-    const boxes = items.map(e => {
-      const st = status(e, nowMs), days = Math.ceil((deadlineMs(e) - nowMs) / DAY);
-      const name = e.s.name;
-      const when = st === "closed" ? `${fmtShort(e.deadline)}, closed` :
-        days <= 0 ? `${fmtShort(e.deadline)}, today` : `${fmtShort(e.deadline)}, in ${days} day${days === 1 ? "" : "s"}`;
-      const w = Math.max(name.length * CH_NAME, when.length * CH_SUB) + 20;
-      const xx = x(deadlineMs(e));
-      const flip = xx + w > W - padR;              // anchor label to the left of the edge near the right end
-      return { e, st, name, when, w, xx, bx: flip ? xx - w : xx, flip };
-    });
-    // Lane packing, lane 0 closest to the waveform. Rules:
-    //  - boxes in the same lane must not overlap
-    //  - a box must never cover another deadline's stem, so any deadline whose edge
-    //    falls under a box has to sit in a lower lane (a staircase)
-    const placed = [];
-    const covers = (b, xx) => xx >= b.bx - 4 && xx <= b.bx + b.w + 4;
-    for (let i = boxes.length - 1; i >= 0; i--) {             // right to left
-      const b = boxes[i];
-      let min = 0, max = Infinity;
-      placed.forEach(p => {
-        if (covers(b, p.xx)) min = Math.max(min, p.lane + 1);  // p's stem is under b: b goes above p
-        if (covers(p, b.xx)) max = Math.min(max, p.lane - 1);  // b's stem is under p: b goes below p
-      });
-      const free = L => !placed.some(p => p.lane === L && b.bx < p.bx + p.w + GAP && p.bx < b.bx + b.w + GAP);
-      let lane = min;
-      while (!free(lane) && lane <= max) lane++;
-      if (!free(lane)) { lane = min; while (!free(lane)) lane++; }   // constraint impossible: just avoid overlap
-      b.lane = lane;
-      placed.push(b);
-    }
-    const lanes = Math.max(1, ...boxes.map(b => b.lane + 1));
-    const top = 16, laneH = BOX_H + 12;
-    const hi = top + lanes * laneH + 18, lo = hi + 34, H = lo + 58;
-
-    // waveform: high on even months, low on odd months
-    let wave = `M${x(t0)},${lo}`, months = "", grid = "";
-    for (let i = 0; i < MONTHS; i++) {
-      const a = new Date(now.getFullYear(), now.getMonth() + i, 1), b = new Date(now.getFullYear(), now.getMonth() + i + 1, 1);
-      const xa = x(a.getTime()), xb = x(b.getTime()), y = i % 2 ? lo : hi;
-      wave += ` L${xa},${y} L${xb},${y}`;
-      const yr = a.getMonth() === 0 || i === 0 ? ` ${a.getFullYear()}` : "";
-      months += `<text x="${(xa + xb) / 2}" y="${lo + 30}" text-anchor="middle" font-size="16" font-weight="700" fill="#2B3645">${a.toLocaleDateString(undefined, { month: "short" })}${yr}</text>`;
-      if (i) grid += `<line x1="${xa}" y1="${top}" x2="${xa}" y2="${lo + 8}" stroke="#E3E8EE" stroke-width="1"/>`;
-    }
-    const nx = x(nowMs);
-    const colour = { open: "#08694E", soon: "#C77700", closed: "#8E98A6" };
-    const textCol = { open: "#0E1621", soon: "#0E1621", closed: "#56606E" };
-
-    const stems = boxes.map(b => {
-      const by = hi - 18 - (b.lane + 1) * laneH + 12, c = colour[b.st];
-      return `<line x1="${b.xx}" y1="${by + BOX_H}" x2="${b.xx}" y2="${lo}" stroke="${c}" stroke-width="${b.st === "closed" ? 2 : 3}"/>
-        <circle cx="${b.xx}" cy="${lo}" r="5" fill="${c}"/>`;
-    }).join("");
-    const marks = boxes.map(b => {
-      const by = hi - 18 - (b.lane + 1) * laneH + 12, c = colour[b.st];
-      const tx = b.bx + 10;
-      return `<g class="dg-item" tabindex="0" role="link" data-id="${esc(b.e.id)}" aria-label="${esc(b.e.name)} paper deadline ${esc(b.when)}">
-        <title>${esc(b.e.name)}: paper deadline ${fmt(b.e.deadline)}</title>
-        <rect class="pill" x="${b.bx}" y="${by}" width="${b.w}" height="${BOX_H}" rx="6" fill="#fff" stroke="${c}" stroke-width="2"/>
-        <rect x="${b.flip ? b.bx + b.w - 5 : b.bx}" y="${by}" width="5" height="${BOX_H}" rx="2" fill="${c}"/>
-        <text x="${tx}" y="${by + 19}" font-size="16" font-weight="800" fill="${textCol[b.st]}">${esc(b.name)}</text>
-        <text x="${tx}" y="${by + 36}" font-size="13.5" font-weight="600" fill="${b.st === "closed" ? "#56606E" : b.st === "soon" ? "#8A5300" : "#2B3645"}">${esc(b.when)}</text>
-      </g>`;
-    }).join("");
-
-    $("#diagram").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${items.length} paper deadlines over the next ${MONTHS} months, relative to today">
-      <rect x="${x(t0)}" y="${top - 6}" width="${Math.max(0, nx - x(t0))}" height="${lo - top + 14}" fill="#EEF1F5"/>
-      ${grid}
-      <path d="${wave}" fill="none" stroke="#1D38B0" stroke-width="3" stroke-linejoin="round" opacity=".55"/>
-      ${months}
-      <line x1="${nx}" y1="${top - 6}" x2="${nx}" y2="${lo + 8}" stroke="#C0251B" stroke-width="3"/>
-      <rect x="${nx - 30}" y="${lo + 38}" width="60" height="22" rx="4" fill="#C0251B"/>
-      <text x="${nx}" y="${lo + 54}" text-anchor="middle" font-size="13.5" font-weight="800" fill="#fff">Today</text>
-      ${stems}${marks}
-    </svg>`;
-    if (!items.length) $("#diagram").innerHTML = `<div class="empty">No deadlines in the next ${MONTHS} months yet.</div>`;
+        </div>
+        <div class="tl-foot"><div></div><div class="tl-foot-scale"><span class="tl-now-tag" style="left:${pn}%">Today</span></div></div>
+      </div></div>
+      <p class="tl-note">Click a row to see full details below.${outside > 0 ? ` ${outside} more conference${outside > 1 ? "s are" : " is"} outside this ${MONTHS}-month window and listed below.` : ""}</p>`
+      : `<div class="empty">Nothing in the next ${MONTHS} months matches these filters.</div>`;
   }
 
   function jumpTo(id) {
-    if (layout !== "list") document.querySelector('[data-layout="list"]').click();
     let el = document.getElementById("row-" + id);
     if (!el) {                                   // hidden by filters: clear them and try again
       $("#q").value = ""; $("#catSel").value = "";
@@ -364,9 +311,8 @@
     const list = filtered();
     const open = list.filter(e => isOpen(status(e))).length;
     $("#countLine").textContent = `${list.length} conference${list.length === 1 ? "" : "s"} shown, ${open} with open deadlines`;
-    $("#listView").hidden = layout !== "list";
-    $("#timelineView").hidden = layout !== "timeline";
-    layout === "list" ? renderList(list) : renderTimeline(list);
+    renderTimeline(list);
+    renderList(list);
   }
   function tick() {
     const now = Date.now(), byId = Object.fromEntries(editions.map(e => [e.id, e]));
@@ -376,7 +322,7 @@
       el.textContent = t.d > 0 ? `${t.d} days ${t.h} h left` : `${pad(t.h)}:${pad(t.m)}:${pad(t.s)} left`;
     });
   }
-  function renderAll() { renderHealth(); renderHero(); renderChanges(); renderDiagram(); renderMain(); }
+  function renderAll() { renderHealth(); renderHero(); renderChanges(); renderMain(); }
 
   async function getJSON(path, fallback) {
     try {
@@ -398,16 +344,12 @@
     set(b.dataset[attr]);
     document.querySelectorAll(`[data-${attr}]`).forEach(x => x.setAttribute("aria-pressed", String(x === b)));
     renderMain();
-    history.replaceState(null, "", `#${layout}`);
   }));
   seg("view", v => view = v);
-  seg("layout", v => layout = v);
-  if (location.hash === "#timeline") document.querySelector('[data-layout="timeline"]').click();
   ["#q", "#catSel", "#sortSel"].forEach(s => $(s).addEventListener("input", renderMain));
-  $("#diagram").addEventListener("click", ev => { const g = ev.target.closest(".dg-item"); if (g) jumpTo(g.dataset.id); });
-  $("#diagram").addEventListener("keydown", ev => {
-    const g = ev.target.closest(".dg-item");
-    if (g && (ev.key === "Enter" || ev.key === " ")) { ev.preventDefault(); jumpTo(g.dataset.id); }
+  $("#timeline").addEventListener("click", ev => {
+    if (ev.target.closest(".tl-toggle")) { showClosed = !showClosed; renderMain(); return; }
+    const r = ev.target.closest(".tl-row"); if (r) jumpTo(r.dataset.id);
   });
 
   const icsAbs = new URL("deadlines.ics", location.href);
@@ -419,6 +361,6 @@
 
   load();
   setInterval(() => { renderHero(); tick(); }, 1000);
-  setInterval(() => { renderHealth(); renderDiagram(); renderMain(); }, 60e3);
+  setInterval(() => { renderHealth(); renderMain(); }, 60e3);
   setInterval(load, 30 * 60e3);
 })();

@@ -38,25 +38,9 @@
     </section>
   </div>
 
-  <section class="card diagram" aria-labelledby="diagTitle">
-    <div class="diag-top">
-      <h2 id="diagTitle">Deadlines from today</h2>
-      <ul class="legend">
-        <li><span class="lg-edge open"></span>Open</li>
-        <li><span class="lg-edge soon"></span>Closing within 14 days</li>
-        <li><span class="lg-edge closed"></span>Closed</li>
-        <li><span class="lg-today"></span>Today</li>
-      </ul>
-    </div>
-    <div class="diag-scroll"><div id="diagram"></div></div>
-    <p class="diag-foot">Each line drops to the day its paper deadline falls. The shaded area is the past. Click a label to jump to that conference.</p>
-  </section>
+
 
   <div class="controls" id="content">
-    <div class="seg" role="group" aria-label="Layout">
-      <button data-layout="list" aria-pressed="true">List</button>
-      <button data-layout="timeline" aria-pressed="false">Timeline</button>
-    </div>
     <div class="seg" role="group" aria-label="Show">
       <button data-view="upcoming" aria-pressed="true">Upcoming</button>
       <button data-view="open" aria-pressed="false">Open deadlines</button>
@@ -78,8 +62,20 @@
   </div>
   <p class="count-line" id="countLine" aria-live="polite"></p>
 
+  <section class="card tl-card" aria-labelledby="tlTitle">
+    <div class="tl-top">
+      <h2 id="tlTitle">Timeline</h2>
+      <ul class="legend">
+        <li><span class="lg-dl"></span>Paper deadline</li>
+        <li><span class="lg-gap"></span>Time until the conference</li>
+        <li><span class="lg-conf"></span>Conference</li>
+        <li><span class="lg-today"></span>Today</li>
+      </ul>
+    </div>
+    <div id="timeline"></div>
+  </section>
+
   <section id="listView" class="list" aria-label="Conference list"><div class="empty">Loading conferences…</div></section>
-  <section id="timelineView" class="card tl-card" aria-label="Conference timeline" hidden></section>
 
   <footer>
     <p>Countdowns end at 23:59 on the deadline day in the conference's stated time zone when known, otherwise in your own time zone. Always confirm on the official page before submitting.</p>
