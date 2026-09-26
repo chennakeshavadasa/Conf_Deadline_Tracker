@@ -5,7 +5,7 @@ circuits & systems conferences (ISSCC, VLSI Symposium, CICC, ISCAS, BioCAS,
 AICAS, NEWCAS, A-SSCC, ESSERC, RFIC, DAC and 20+ more), published as a website
 on GitHub Pages.
 
-**Live site:** `https://<your-username>.github.io/<repo-name>/`
+**Live site:** `https://chennakeshavadasa.github.io/Conf_Deadline_Tracker/`
 
 Students get live countdowns, a timeline, a calendar subscription that updates
 itself, and an RSS feed of extensions and newly announced deadlines.
