@@ -8,5 +8,15 @@
     "new": null,
     "message": "Tracker started with 44 editions across 34 conference series.",
     "source": null
+  },
+  {
+    "date": "2026-10-03",
+    "edition": "socc-2027",
+    "kind": "new-edition",
+    "field": null,
+    "old": null,
+    "new": null,
+    "message": "Now tracking SOCC 2027. Dates will appear once announced.",
+    "source": null
   }
 ]

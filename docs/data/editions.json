@@ -702,6 +702,24 @@
     "pinned": []
   },
   {
+    "id": "socc-2027",
+    "series": "socc",
+    "year": 2027,
+    "name": "SOCC 2027",
+    "start": null,
+    "end": null,
+    "location": null,
+    "deadline": null,
+    "deadline_tz": null,
+    "note": null,
+    "url": "https://www.ieee-socc.org/",
+    "source": null,
+    "confidence": "unverified",
+    "last_checked": null,
+    "last_changed": "2026-10-03",
+    "pinned": []
+  },
+  {
     "id": "vlsi-2027",
     "series": "vlsi",
     "year": 2027,
