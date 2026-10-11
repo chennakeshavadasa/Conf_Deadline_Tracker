@@ -1,9 +1,9 @@
 {
-  "last_run": "2026-10-10T08:29:35+00:00",
+  "last_run": "2026-10-11T08:50:44+00:00",
   "checked": 0,
   "api_calls": 0,
   "errors": 0,
-  "deferred": 19,
+  "deferred": 18,
   "changes": 0,
   "pending_review": 0,
   "model": "claude-sonnet-4-6",
