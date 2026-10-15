@@ -18,5 +18,25 @@
     "new": null,
     "message": "Now tracking SOCC 2027. Dates will appear once announced.",
     "source": null
+  },
+  {
+    "date": "2026-10-15",
+    "edition": "isocc-2027",
+    "kind": "new-edition",
+    "field": null,
+    "old": null,
+    "new": null,
+    "message": "Now tracking ISOCC 2027. Dates will appear once announced.",
+    "source": null
+  },
+  {
+    "date": "2026-10-15",
+    "edition": "vlsisoc-2027",
+    "kind": "new-edition",
+    "field": null,
+    "old": null,
+    "new": null,
+    "message": "Now tracking VLSI-SoC 2027. Dates will appear once announced.",
+    "source": null
   }
 ]

@@ -468,6 +468,24 @@
     "pinned": []
   },
   {
+    "id": "isocc-2027",
+    "series": "isocc",
+    "year": 2027,
+    "name": "ISOCC 2027",
+    "start": null,
+    "end": null,
+    "location": null,
+    "deadline": null,
+    "deadline_tz": null,
+    "note": null,
+    "url": "https://isocc.org/",
+    "source": null,
+    "confidence": "unverified",
+    "last_checked": null,
+    "last_changed": "2026-10-15",
+    "pinned": []
+  },
+  {
     "id": "ispd-2027",
     "series": "ispd",
     "year": 2027,
@@ -789,6 +807,24 @@
     "confidence": "seed",
     "last_checked": null,
     "last_changed": "2026-09-26",
+    "pinned": []
+  },
+  {
+    "id": "vlsisoc-2027",
+    "series": "vlsisoc",
+    "year": 2027,
+    "name": "VLSI-SoC 2027",
+    "start": null,
+    "end": null,
+    "location": null,
+    "deadline": null,
+    "deadline_tz": null,
+    "note": null,
+    "url": "https://vlsi-soc.com/",
+    "source": null,
+    "confidence": "unverified",
+    "last_checked": null,
+    "last_changed": "2026-10-15",
     "pinned": []
   },
   {
