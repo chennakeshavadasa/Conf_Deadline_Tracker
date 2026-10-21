@@ -2,29 +2,15 @@
 <rss version="2.0">
 <channel>
   <title>Chip conference deadlines: changes</title>
-  <link>https://chennakeshavadasa.github.io/Conf_Deadline_Tracker/updates.html</link>
-  <description>New editions, announced deadlines and extensions for analog, VLSI and CAS conferences.</description>
-  <lastBuildDate>Wed, 21 Oct 2026 07:39:31 +0000</lastBuildDate>
+  <link>https://nithinpuru.github.io/deadline/updates.html</link>
+  <description>This feed moved to https://nithinpuru.github.io/deadline/feed.xml and is no longer updated here.</description>
+  <lastBuildDate>Wed, 21 Oct 2026 09:00:00 +0000</lastBuildDate>
   <item>
-    <title>Now tracking VLSI-SoC 2027. Dates will appear once announced.</title>
-    <link>https://chennakeshavadasa.github.io/Conf_Deadline_Tracker</link>
-    <guid isPermaLink="false">vlsisoc-2027-None-None-2026-10-15</guid>
-    <pubDate>Thu, 15 Oct 2026 12:00:00 +0000</pubDate>
-    <category>new-edition</category>
-  </item>
-  <item>
-    <title>Now tracking ISOCC 2027. Dates will appear once announced.</title>
-    <link>https://chennakeshavadasa.github.io/Conf_Deadline_Tracker</link>
-    <guid isPermaLink="false">isocc-2027-None-None-2026-10-15</guid>
-    <pubDate>Thu, 15 Oct 2026 12:00:00 +0000</pubDate>
-    <category>new-edition</category>
-  </item>
-  <item>
-    <title>Now tracking SOCC 2027. Dates will appear once announced.</title>
-    <link>https://chennakeshavadasa.github.io/Conf_Deadline_Tracker</link>
-    <guid isPermaLink="false">socc-2027-None-None-2026-10-03</guid>
-    <pubDate>Sat, 03 Oct 2026 12:00:00 +0000</pubDate>
-    <category>new-edition</category>
+    <title>This feed moved: subscribe to nithinpuru.github.io/deadline/feed.xml</title>
+    <link>https://nithinpuru.github.io/deadline/updates.html</link>
+    <guid isPermaLink="false">feed-moved-2026-10-21</guid>
+    <pubDate>Wed, 21 Oct 2026 09:00:00 +0000</pubDate>
+    <description>The chip conference deadline tracker now lives at https://nithinpuru.github.io/deadline/ . Its change feed is https://nithinpuru.github.io/deadline/feed.xml ; this old address is no longer updated.</description>
   </item>
 </channel>
 </rss>

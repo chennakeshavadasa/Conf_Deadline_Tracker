@@ -5,7 +5,14 @@ circuits & systems conferences (ISSCC, VLSI Symposium, CICC, ISCAS, BioCAS,
 AICAS, NEWCAS, A-SSCC, ESSERC, RFIC, DAC and 20+ more), published as a website
 on GitHub Pages.
 
-**Live site:** `https://chennakeshavadasa.github.io/Conf_Deadline_Tracker/`
+**Live site:** <https://nithinpuru.github.io/deadline/>
+
+> **Moved.** The tracker now runs and publishes from
+> [NithinPuru/nithinpuru.github.io](https://github.com/NithinPuru/nithinpuru.github.io)
+> (`tracker/`, the `tracker-*` workflows), at https://nithinpuru.github.io/deadline/.
+> This repo no longer runs the daily check or deploys its own copy: the old
+> address forwards there, and its calendar and RSS feeds carry a "moved" notice.
+> The code below is kept for reference.
 
 Students get live countdowns, a timeline, a calendar subscription that updates
 itself, and an RSS feed of extensions and newly announced deadlines.
